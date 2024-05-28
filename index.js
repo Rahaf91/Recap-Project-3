@@ -1,3 +1,5 @@
+console.clear();
+
 import CharacterCard from "./components/CharacterCard/CharacterCard.js";
 
 // von uns:
@@ -30,3 +32,32 @@ const pagination = document.querySelector('[data-js="pagination"]');
 const maxPage = 1;
 const page = 1;
 const searchQuery = "";
+/*Fetch the Data
+Now we can fetch the character data from the API and generate our cards with it.
+
+Inside of the index.js create a function called fetchCharacters.
+Use your knowledge about fetching to get the first 20 characters from the API. You can find the correct API endpoint in the docs.
+Import the CharacterCard function.
+After successfully fetching the character data, use array methods to create an HTML card for each character and append it to the cardContainer.
+Make sure that the cardContainer is emptied every time new characters are fetched (HINT: you can use innerHTML = '' for that).
+Call the function inside the index.js. Now you should see 20 cards in your app. */
+
+async function fetchCharacters() {
+  const response = await fetch(
+    "https://rickandmortyapi.com/api/character/?page=1"
+  );
+  const data = await response.json();
+  //console.log(data);
+  // console.log(data.results);
+  //const results = data.results;
+  showCharacters(data.results);
+}
+fetchCharacters();
+
+function showCharacters(characters) {
+  cardContainer.innerHTML = "";
+  characters.forEach((character) => {
+    const characterCard = CharacterCard(character);
+    cardContainer.append(characterCard);
+  });
+}
