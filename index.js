@@ -49,12 +49,12 @@ async function fetchCharacters() {
   const data = await response.json();
   //console.log(data);
   // console.log(data.results);
-  //const results = data.results;
-  showCharacters(data.results);
+  const characters = data.results;
+  renderCharacters(characters);
 }
 fetchCharacters();
 
-function showCharacters(characters) {
+function renderCharacters(characters) {
   cardContainer.innerHTML = "";
   characters.forEach((character) => {
     const characterCard = CharacterCard(character);
