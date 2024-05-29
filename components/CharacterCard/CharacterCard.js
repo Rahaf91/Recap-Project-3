@@ -1,18 +1,4 @@
-// Input parameters: was gibt der User ein?
-//   Was kann man in die app eingeben? (erstmal) nur die Namen?
-// Oder ist hier mit "input" was anderes gemeint?
-// Wo kommt der Input hin? hier? in die geschweiften Klammern? oder davor in die runden?
-// Output/return: the created li element
 export default function CharacterCard(character) {
-  // > mit export default" brauch man keine geschw. Klammern beim Import; mit nur "export" brauch man die geschweiften Klammern;
-  // in React immer nur "export default" bei Komponenten, bei normalen Helferfunktionen normal mit export ohne default.;
-  //
-  // zuerstInnerHtml
-  // Hauptelement ul mitinnerHtml importieren (mit innerHTML und back ticks)
-  // then write a function CaracterCard (see above) - see JS create Elements
-
-  // const ImageURL = document.createElement("ul");
-
   const li = document.createElement("li");
 
   const ImageURL = character.image;
@@ -46,14 +32,3 @@ export default function CharacterCard(character) {
   `;
   return li;
 }
-
-// als letztes:
-// const cardList = document.createElement("cardList");
-// cardList.classList = "card";
-
-// die Zeile unten hängt den card container an den body im html an
-// document.body.append(cardContainer);
-// brauchen wir nicht weil das jetzt schon in der index.js steht
-
-// diese sollte die Liste an den main container anhängen;
-// cardContainer.append(li);

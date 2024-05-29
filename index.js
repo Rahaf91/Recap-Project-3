@@ -2,7 +2,6 @@ console.clear();
 
 import CharacterCard from "./components/CharacterCard/CharacterCard.js";
 
-// von uns:
 const character = {
   image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
   name: "Rick Sanchez",
@@ -11,12 +10,8 @@ const character = {
   occurrences: 51,
 };
 
-// von uns (nicht ganz verstanden):
 const characterCard = CharacterCard(character);
-
 const cardContainer = document.querySelector('[data-js="card-container"]');
-// von uns (nicht ganz verstanden) - muss hinter der Konstanten ('const characterCard = CharacterCard(character);
-// ')stehen:
 cardContainer.append(characterCard);
 
 const searchBarContainer = document.querySelector(
@@ -31,22 +26,28 @@ const pagination = document.querySelector('[data-js="pagination"]');
 // States
 const maxPage = 42;
 let page = 1;
-const searchQuery = "";
+let searchQuery = "";
 
+//fetch data
 async function fetchCharacters() {
   const response = await fetch(
     `https://rickandmortyapi.com/api/character/?page=${page}&name=${searchQuery}`
   );
   const data = await response.json();
-  console.log(data);
-  // console.log(data.results);
+  //console.log(data);
+  //console.log(data.results);
   const characters = data.results;
-  // HIER WEITER:
-  // folgende Zeile neu für Aufgabe 4 - funktioniert aber noch nicht;
-  characters.filter((character) => {
-    character.name.startsWith(searchQuery);
+  //filter each character
+  /* characters.filter((character) => {
+    return character.name.toLowerCase().startsWith(searchQuery.toLowerCase());
+  });*/ //That worked but with event type "input"..
+
+  const filteredCharacters = characters.filter((character) => {
+    return character.name.toLowerCase().startsWith(searchQuery.toLowerCase());
   });
-  renderCharacters(characters);
+
+  //renderCharacters(Characters);// this if the event type is input
+  renderCharacters(filteredCharacters);
 }
 fetchCharacters();
 
@@ -58,6 +59,7 @@ function renderCharacters(characters) {
   });
 }
 
+//Pagination
 prevButton.addEventListener("click", () => {
   if (page > 1) {
     page--;
@@ -74,19 +76,18 @@ nextButton.addEventListener("click", () => {
   }
 });
 
-// - Add an event listener on each of the next and prev buttons which do the following
-//   - it is prevented that the page index could go higher than the max page index or below 1
-//   - the page index is increased / decreased
-//   - the `fetchCharacters` function is called
-// - Update the pagination display each time characters are fetched to show the current page index and
-//   the current max page index.
-
-// Aufgabe4:
-searchBar.addEventListener("submit", (event) => {
+//  Searchbar:
+/*searchBar.addEventListener("input", (event) => {
   const input = event.target.value;
-  // für die Zeile hierdrüber, s. JS Form
   searchQuery = input;
-  // HIER WEITER! (das unten fertig machen)
   fetchCharacters();
-  // characters.filter(character)
+});*/
+
+// Searchbar:
+searchBar.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const input = event.target.query.value;
+  searchQuery = input;
+  event.target.reset();
+  fetchCharacters();
 });
